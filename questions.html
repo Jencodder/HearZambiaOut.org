@@ -1,0 +1,108 @@
+<?php
+require_once '../config/config_session.inc.php';
+require_once 'includes/db_connect.php';
+
+// Fetch posts (make sure id is selected)
+$stmt = $pdo->prepare("SELECT id, content FROM posts ORDER BY created_at DESC");
+$stmt->execute();
+$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hear Zambia Out - QnAs</title>
+    <link rel="stylesheet" href="assets/css/questions.css">
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+    <nav class="navbar">
+        <div class="logo-box">
+            <!--<img src="assets/images/BLCI_JG_Logo_White.png" class="logo" alt="Logo">-->
+            <span class="site-title">Hear Zambia Out</span>
+        </div>
+
+        <div class="burger" id="burger">
+            <img src="assets/images/burger-bar.png" class="burger-icon" alt="Menu">
+        </div>
+
+        <div class="nav-links" id="navLinks">
+            <a href="index.php">Home</a>
+            <a href="about.php">About</a>
+            <a href="questions.php">QnAs</a>
+            <a href="login_form.php">Login</a>
+        </div>
+    </nav>
+
+<!-- ================= POSTS ================= -->
+<main class="main-container">
+    <?php if (empty($posts)): ?>
+        <p class="no-posts">No posts available.</p>
+    <?php else: ?>
+        <div class="posts-container">
+            <?php foreach ($posts as $post): ?>
+                <div class="post-card">
+                    <div class="post-content"><?= $post['content'] ?></div>
+
+                    <!-- Response form -->
+                    <form action="handlers/responses.inc.php" method="POST" class="response-form">
+                        <label for="response_<?= $post['id'] ?>">What do you think:</label>
+                        <textarea id="response_<?= $post['id'] ?>" name="Response_text" required placeholder="Type your answer here..."></textarea>
+
+                        <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
+
+                        <button type="submit" class="submit-btn">Submit Answer</button>
+
+                        <?php
+                            require_once '../src/view/response_view.php';
+                            response_error();
+                        ?>
+                    </form>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</main>
+
+<!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p class="footer-title">Connect With Us</p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><img src="assets/images/facebook.png" alt="Facebook"></a>
+                <a href="#" class="social-icon"><img src="assets/images/instagram.jpg" alt="Twitter"></a>
+                <a href="#" class="social-icon"><img src="assets/images/YouTube.png" alt="Instagram"></a>
+            </div>
+            <p class="footer-copy">&copy; 2025 UNZA Q&A Platform. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+<script>
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+
+    burger.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+    });
+
+    // Close menu if click outside
+    document.addEventListener('click', (e) => {
+        if (!burger.contains(e.target) && !navLinks.contains(e.target)) {
+            navLinks.classList.remove('open');
+        }
+    });
+
+    // Reset menu on desktop resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            navLinks.classList.remove('open');
+        }
+    });
+
+</script>
+
+</body>
+</html>

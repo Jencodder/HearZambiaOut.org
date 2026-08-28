@@ -1,0 +1,193 @@
+/* =========================================
+   GLOBAL
+========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: #f2f7ff;
+}
+
+/* =========================================
+   NAVBAR
+========================================= */
+.navbar {
+    width: 100%;
+    padding: 18px 40px;
+    background: #002244;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.nav-left .site-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Links (desktop) */
+.nav-right {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-right a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: color .3s;
+}
+
+.nav-right a:hover {
+    color: #ffde59;
+}
+
+/* Burger (hidden on desktop) */
+.burger {
+    display: none;
+    cursor: pointer;
+}
+
+.burger img {
+    width: 32px;
+}
+
+/* =========================================
+   POSTS
+========================================= */
+.no-posts {
+    text-align: center;
+    margin-top: 80px;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.posts-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 60px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Post Card */
+.post-card {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-left: 6px solid #004aad;
+}
+
+.post-content {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* =========================================
+   RESPONSE FORM
+========================================= */
+.response-form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.response-form label {
+    font-weight: bold;
+    color: #004aad;
+}
+
+.response-form textarea {
+    width: 100%;
+    padding: 12px;
+    min-height: 130px;
+    font-size: 1rem;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    resize: vertical;
+}
+
+/* Button */
+.submit-btn {
+    width: 180px;
+    padding: 12px;
+    background: #004aad;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background .3s, transform .1s;
+}
+
+.submit-btn:hover {
+    background: #003680;
+}
+
+.submit-btn:active {
+    transform: scale(0.97);
+}
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+    /* Burger shows */
+    .burger {
+        display: block;
+    }
+
+    /* Nav hides */
+    .nav-right {
+        position: fixed;
+        top: -100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #002244;
+        width: 85%;
+        padding: 25px 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        border-radius: 10px;
+        transition: top 0.4s;
+        z-index: 1000;
+    }
+
+    .nav-right.open {
+        top: 75px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .site-title {
+        font-size: 1.2rem;
+    }
+
+    .post-card {
+        padding: 18px;
+    }
+
+    .response-form textarea {
+        min-height: 150px;
+    }
+}
